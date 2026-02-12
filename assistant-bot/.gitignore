@@ -1,0 +1,32 @@
+# --- OS / System ---
+.DS_Store
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Environments ---
+.env
+.venv
+env/
+venv/
+ENV/
+
+# --- Distribution ---
+dist/
+build/
+*.egg-info/
+
+# --- IDEs ---
+.idea/
+.vscode/
+
+# --- Project Data & Logs ---
+user_address_book/
+*.log
+*.json
+*.csv
+*.pkl
+
+
