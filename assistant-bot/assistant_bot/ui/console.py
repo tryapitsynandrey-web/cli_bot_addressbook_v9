@@ -44,7 +44,7 @@ def print_warning(msg: str) -> None:
 def print_duplicate_error(owner_name: str, owner_data: Dict[str, Any], value: str, messages: Tuple[str, ...]) -> None:
     """
     Prints a gamified duplicate error message.
-    
+
     Args:
         owner_name: Name of the contact owning the duplicate data.
         owner_data: Dictionary of data (unused but kept for interface consistency).
@@ -52,12 +52,12 @@ def print_duplicate_error(owner_name: str, owner_data: Dict[str, Any], value: st
         messages: A tuple of potential error messages to choose from.
     """
     msg = random.choice(messages)
-    
+
     try:
         # We provide common context variables for formatting
         formatted_msg = msg.format(name=owner_name, email=value, phone=value)
     except (IndexError, KeyError, ValueError):
         # Fallback to raw message if placeholder mismatch occurs
         formatted_msg = msg
-        
+
     console.print(f"[error]❌ {formatted_msg}[/error] (Owned by: [bold]{owner_name}[/bold])")
