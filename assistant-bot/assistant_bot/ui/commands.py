@@ -409,11 +409,21 @@ def handle_list_notes(service: AddressBookService, args: List[str]) -> None:
              print_info(f"No notes found{' for ' + name if name else ''}.")
              return
 
+        table = Table(title="Notes List", show_header=True, header_style="bold cyan", box=box.ROUNDED, show_lines=True)
+        table.add_column("NAME", style="bold green", min_width=20)
+        table.add_column("NOTE", style="white")
+
+        has_notes = False
         for contact_name, note_list in results.items():
             if note_list:
-                console.print(f"[bold]{contact_name}[/bold]:")
-                for i, note in enumerate(note_list, 1):
-                    console.print(f"  {i}. {note}")
+                for note in note_list:
+                    table.add_row(contact_name, note)
+                    has_notes = True
+
+        if has_notes:
+            console.print(Align.center(table))
+        else:
+             print_info(f"No notes found{' for ' + name if name else ''}.")
                     
     except BotException as e:
         print_error(str(e))
@@ -459,9 +469,24 @@ def handle_list_tags(service: AddressBookService, args: List[str]) -> None:
         print_info("No tags found.")
         return
     
-    for name, t_list in results.items():
-        if t_list:
-            console.print(f"[bold]{name}[/bold]: {', '.join(t_list)}")
+    table = Table(title="Tags List", show_header=True, header_style="bold cyan", box=box.ROUNDED)
+    table.add_column("TAG", style="bold yellow", min_width=20)
+    table.add_column("CONTACT", style="green")
+
+    # Flatten and sort: (tag, contact_name)
+    rows = []
+    for contact_name, tags in results.items():
+        if tags:
+            for tag in tags:
+                rows.append((tag, contact_name))
+    
+    # Sort by Tag, then Contact
+    rows.sort(key=lambda x: (x[0], x[1]))
+
+    for tag, contact_name in rows:
+        table.add_row(tag, contact_name)
+    
+    console.print(Align.center(table))
 
 
 @command("filter_by_tag", "Find contacts by tag: filter_by_tag <tag>")
