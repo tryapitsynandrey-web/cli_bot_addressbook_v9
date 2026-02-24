@@ -1,2 +1,29 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Enforce LF for all auto-detected text files
+* text=auto eol=lf
+
+# Python Source
+*.py text eol=lf
+*.pyw text eol=lf
+
+# Configuration and Documentation
+*.md text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.ini text eol=lf
+
+# Shell Scripts
+*.sh text eol=lf executable
+
+# Exclude Binary Files from modifications
+*.pkl binary
+*.pyc binary
+*.pyd binary
+*.so binary
+*.dll binary
+*.exe binary
+
+# Editor / Git Config
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.editorconfig text eol=lf
